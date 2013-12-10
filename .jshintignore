@@ -1,0 +1,5 @@
+# JSHint ignore file
+# run jshint from the root:
+# $ jshint .
+
+dist
