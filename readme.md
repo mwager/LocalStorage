@@ -45,3 +45,8 @@ ls.delete('some-key');
 // clear localStorage:
 ls.nuke();
 ```
+
+## Code Quality ##
+
+    # We use jshint for static analysis, execute:
+    $ jshint .
