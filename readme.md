@@ -6,12 +6,17 @@ Simple `window.localStorage` abstraction wrapper
 
 ### Via bower  ###
 
-    # TODO raw url?
-    $ bower install LocalStorage
+Add this to your `bower.json`:
+
+    "LocalStorage": "https://raw.github.com/mwager/LocalStorage/master/src/LocalStorage.js"
+
+Then execute:
+
+    $ bower install
 
 ### From source  ###
 
-    $ git clone ...
+    $ git clone https://github.com/mwager/LocalStorage
     $ npm install && bower install
     # -> src/LocalStorage.js
 
@@ -23,22 +28,20 @@ Simple `window.localStorage` abstraction wrapper
 
 ## API ##
 
-Usage is simple and straightforward.
-
 ```javascript
-    var ls = new LocalStorage();
+var ls = new LocalStorage();
 
-    ls.isValid() // true if environment supports localStorage
+ls.isValid() // true if environment supports localStorage
 
-    // persist:
-    ls.save('some-key', {foo:'bar'});
+// persist:
+ls.save('some-key', {foo:'bar'});
 
-    // read:
-    var obj = ls.get('some-key', {foo:'bar'});
+// read:
+var obj = ls.get('some-key', {foo:'bar'});
 
-    // delete:
-    ls.delete('some-key');
+// delete:
+ls.delete('some-key');
 
-    // clear localStorage:
-    ls.nuke();
+// clear localStorage:
+ls.nuke();
 ```
