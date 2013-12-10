@@ -12,12 +12,13 @@
   },
 
   "scripts": {
-    "test": "grunt test --verbose"
+    "test": "./node_modules/.bin/grunt test --verbose"
   },
 
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-cli": "*",
     "grunt-contrib-copy": "~0.4.0",
     "grunt-contrib-concat": "~0.2.0",
     "grunt-contrib-handlebars": "~0.5.8",

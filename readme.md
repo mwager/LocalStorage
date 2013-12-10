@@ -1,6 +1,8 @@
-# VanillaStorage #
+# LocalStorage.js #
 
 Simple `window.localStorage` abstraction wrapper
+
+[![Build Status](https://travis-ci.org/mwager/LocalStorage.png?branch=master)](https://travis-ci.org/mwager/LocalStorage)
 
 ## Installation ##
 

@@ -18,5 +18,5 @@ before_script:
   # - "cd casperjs && git checkout tags/1.0.2 && cd .."
   - "npm install && bower install"
 
-script:
-  - "DISPLAY=:99.0 grunt test"
+#script:
+#  - "DISPLAY=:99.0 grunt test"
