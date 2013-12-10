@@ -32,17 +32,22 @@ Then execute:
 
 ```javascript
 var ls = new LocalStorage();
+var obj;
 
-ls.isValid() // true if environment supports localStorage
+console.log(ls.isValid()); // true if environment supports localStorage
 
 // persist:
 ls.save('some-key', {foo:'bar'});
 
 // read:
-var obj = ls.get('some-key', {foo:'bar'});
+obj = ls.get('some-key');
+
+console.log(typeof obj); // 'object' -> {foo:'bar'}
 
 // delete:
 ls.delete('some-key');
+
+obj = ls.get('some-key'); // null
 
 // clear localStorage:
 ls.nuke();

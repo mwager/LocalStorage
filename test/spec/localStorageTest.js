@@ -52,5 +52,24 @@ define(function(require) {
                 });
             });
         });
+
+        describe('Limits', function () {
+            before(function() {
+                this.TOO_MUCH_DATA = {
+                    arr:[]
+                };
+
+                for(var i = 0; i < 1000000; i++) {
+                    this.TOO_MUCH_DATA.arr.push([1,2,3,4,5,6,7,8,9,0]);
+                }
+            });
+            it('should pass the error in the callback if we save too much', function (done) {
+                this.ls.save('test', this.TOO_MUCH_DATA, function(err) {
+                    expect(err.name).to.equal('QUOTA_EXCEEDED_ERR');
+                    // log(err);
+                    done();
+                });
+            });
+        });
     });
 });
