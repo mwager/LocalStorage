@@ -10,12 +10,12 @@ define(function(require) {
     var LocalStorage = require('src/LocalStorage');
 
     // The suite
-    describe('LocalStorage Tests', function () {
+    describe('LocalStorage.js', function () {
         before(function() {
             this.ls = new LocalStorage();
         });
 
-        describe('Basics', function () {
+        describe('save() && read()', function () {
             it('should save and read data by key', function (done) {
                 var self = this;
 
@@ -25,7 +25,9 @@ define(function(require) {
                     done();
                 });
             });
+        });
 
+        describe('delete() && nuke()', function () {
             it('should clear by key', function (done) {
                 var self = this;
 
