@@ -109,11 +109,7 @@ require.config({
     waitSeconds: 60,
 
     deps: [
-        // 'backbone.marionette',
-        // 'main' TODO!? best practise? we require the app above !
-        // und: wir wollen doch in den tests nicht unere routes &
-        // businesslogik laufen haben, sondern ISOLIERT TESTEN!
-        // Wir haben ja auch funktionale Tests...
+
     ],
 
     // karma:
