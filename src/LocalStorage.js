@@ -5,6 +5,7 @@
  *
  * @author  Michael Wager <mail@mwager.de>
  * @licence MIT
+ * @version 1.0
  */
 (function() {
     'use strict';
