@@ -1,57 +1,59 @@
 /**
  * LocalStorage.js testsuite
  *
- * @author Michael Wager <mail@mwager.de>
+ * Shows you how to use it (-;
  */
 define(function(require) {
     'use strict';
 
-    // Object under test
     var LocalStorage = require('src/LocalStorage');
 
-    // The suite
     describe('LocalStorage.js', function () {
         before(function() {
             this.ls = new LocalStorage();
         });
 
-        describe('save() && read()', function () {
-            it('should save and read data by key', function (done) {
-                var self = this;
+        it('should save and read data by key', function () {
+            // 1. save
+            this.ls.save('test', {foo: 'bar'});
 
-                this.ls.save('test', {foo: 'bar'}, function() {
-                    var data = self.ls.get('test');
-                    expect(data.foo).to.equal('bar');
-                    done();
-                });
-            });
+            // 2. read and verify it was stored
+            var data = this.ls.get('test');
+            expect(data.foo).to.equal('bar');
         });
 
-        describe('delete() && nuke()', function () {
-            it('should clear by key', function (done) {
-                var self = this;
+        it('should clear by key', function () {
+            this.ls.save('tmp', 'tmp');
 
-                this.ls.save('tmp', 'tmp');
+            expect(this.ls.get('tmp')).to.equal('tmp');
 
-                expect(this.ls.get('tmp')).to.equal('tmp');
+            this.ls.delete('tmp');
 
-                this.ls.delete('tmp', function() {
-                    expect(self.ls.get('tmp')).to.equal(null);
-                    done();
-                });
-            });
-
-            it('should clear all data in the storage', function (done) {
-                var self = this;
-
-                this.ls.save('test', 'test');
-
-                this.ls.nuke(function() {
-                    expect(self.ls.get('test')).to.equal(null);
-                    done();
-                });
-            });
+            expect(this.ls.get('tmp')).to.equal(null);
         });
+
+        it('should clear all data in the storage', function () {
+            this.ls.save('test1', 'test1');
+            this.ls.save('test2', 'test2');
+
+            this.ls.nuke();
+
+            expect(this.ls.get('test1')).to.equal(null);
+            expect(this.ls.get('test2')).to.equal(null);
+        });
+
+        it('should save stuff for fun and profit', function () {
+            var ad = 'listening-to-music-is-good-for-you';
+
+            // 1. save
+            this.ls.save('foo', {advice: ad});
+
+            // 2. read and verify it was stored
+            var data = this.ls.get('foo');
+            expect(data.advice).to.equal(ad);
+        });
+
+
 
         describe('Limits', function () {
             before(function() {
@@ -63,12 +65,13 @@ define(function(require) {
                     this.TOO_MUCH_DATA.arr.push([1,2,3,4,5,6,7,8,9,0]);
                 }
             });
-            it('should pass the error in the callback if we save too much', function (done) {
-                this.ls.save('test', this.TOO_MUCH_DATA, function(err) {
-                    expect(err.name).to.equal('QUOTA_EXCEEDED_ERR');
-                    // log(err);
-                    done();
-                });
+            it('should pass the error in the callback if we save too much', function () {
+                try {
+                    this.ls.save('test', this.TOO_MUCH_DATA);
+                }
+                catch(e) {
+                    expect(e.name).to.equal('QuotaExceededError');
+                }
             });
         });
     });

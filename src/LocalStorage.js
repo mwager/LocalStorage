@@ -9,22 +9,20 @@
 (function() {
     'use strict';
 
-    function ensureCallback(callback) {
-        return typeof callback !== 'function' ? function() {} : callback;
-    }
-
+    // TODO slugify?
     function parseKey(key) {
         return 'ls_' + key;
     }
 
-
-    //////////////////// 1. DEFINITION ////////////////////
+    /**
+     * Constructor
+     */
     var LocalStorage = function() {
         this.storage = window.localStorage;
 
-        // test for support
         var self = this;
 
+        // test for support
         this.isValid = !!window.localStorage && (function() {
             // in mobile safari if safe browsing is enabled, window.storage
             // is defined but setItem calls throw exceptions.
@@ -38,76 +36,65 @@
             self.storage.removeItem(value);
             return success;
         })();
+
+        if(!this.isValid) {
+            throw 'No window.localStorage support in here: ' + navigator.userAgent;
+        }
+        if(!window.JSON) {
+            throw 'No window.JSON support in here: ' + navigator.userAgent;
+        }
     };
 
-    //////////////////// 2. PROTOTYPE ////////////////////
     LocalStorage.prototype = {
-        isValid: function() {
-            return this.isValid;
+        /**
+         * Get data by key
+         *
+         * @param {string} key  The key to get the data for
+         * @return {mixed} The JSON.parse()`d data
+         */
+        get: function(key) {
+            key = parseKey(key);
+
+            var data = JSON.parse(
+                this.storage.getItem(key)
+            );
+
+            return data;
         },
 
-        get: function(key, callback) {
-            callback = ensureCallback(callback);
-            key      = parseKey(key);
+        /**
+         * Store data to localStorage
+         *
+         * @param {string} key  The key
+         * @param {mixed}  data The value, will be stringified
+         */
+        save: function(key, data) {
+            key = parseKey(key);
 
-            /*TODO?
-            if(!this.isValid) {
-                callback(null, null);
-            }*/
-
-            try {
-                var data = JSON.parse(
-                    this.storage.getItem(key)
-                );
-
-                callback(null, data);
-
-                // support sync api too!
-                return data;
-            }
-            catch(e) {
-                callback(e);
-            }
+            this.storage.setItem(key, JSON.stringify(data));
         },
 
-        save: function(key, data, callback) {
-            callback = ensureCallback(callback);
-            key      = parseKey(key);
+        /**
+         * Delete the data stored by 'key' if it exists.
+         *
+         * @param {string} key  The key
+         */
+        delete: function(key) {
+            key = parseKey(key);
 
-            try {
-                this.storage.setItem(key, JSON.stringify(data));
-                callback(null, data);
-            }
-            catch(e) {
-                callback(e);
-            }
+            this.storage.removeItem(key);
         },
 
-        delete: function(key, callback) {
-            callback = ensureCallback(callback);
-            key      = parseKey(key);
-
-            try {
-                this.storage.removeItem(key);
-                callback(null);
-            }
-            catch(e) {
-                callback(e);
-            }
-        },
-
-        nuke: function(callback) {
-            callback = ensureCallback(callback);
-
+        /**
+         * Clear all data from localStorage
+         */
+        nuke: function() {
             this.storage.clear();
-
-            callback(null);
         }
     };
 
 
 
-    //////////////////// 3. EXPORT ////////////////////
     // Export using AMD support...
     if(typeof define === 'function' && define.amd) {
         define([/* no deps */], function() {
