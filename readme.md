@@ -28,16 +28,36 @@ Then execute:
     $ open test/index.html
 
 
-## API ##
+## Usage ##
+
+The API is *very* simple, `window.localStorage`'s exceptions will be
+propagated.
+
+There are 4 public methods:
+
+* `get(key)`
+* `save(key, data)`
+* `delete(key)`
+* `nuke()`
+
+### Examples ###
 
 ```javascript
+
+// Initializing throws an exception if one of the following is true:
+//  - localStorage is not supported in the running environment
+//  - `window.JSON` is not defined
 var ls = new LocalStorage();
 var obj;
 
-console.log(ls.isValid()); // true if environment supports localStorage
-
 // persist:
-ls.save('some-key', {foo:'bar'});
+try {
+    ls.save('some-key', {foo:'bar'});
+}
+catch(e) {
+    // localStorage exception, eg. e.name === 'QuotaExceededError'
+    console.log(e);
+}
 
 // read:
 obj = ls.get('some-key');
