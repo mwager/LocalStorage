@@ -1,7 +1,7 @@
 /**
  * LocalStorage.js
  *
- * Simple wrapper for localStorage with optional async support
+ * Simple wrapper for localStorage with JSON stringify/parse support
  *
  * @author  Michael Wager <mail@mwager.de>
  * @licence MIT
