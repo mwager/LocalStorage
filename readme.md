@@ -11,10 +11,6 @@ Simple `window.localStorage` abstraction wrapper
     $ bower info local-storage
     $ bower install local-storage
 
-Then execute:
-
-    $ bower install
-
 ### From source  ###
 
     $ git clone https://github.com/mwager/LocalStorage
