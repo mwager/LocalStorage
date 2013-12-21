@@ -147,23 +147,22 @@ function() {
             window.mocha.assertionCounter + '</em></li>');
     }
 
+    // require all specs and run
+
     // log(testSuite.specs)
     var specs = [
         'test/spec/localStorageTest'
     ];
     require(specs, function() {
-        // on dom ready require all specs and run
-        $(function() {
-            window.results = document.getElementById('results');
-            start          = window.performance.now();
+        window.results = document.getElementById('results');
+        start          = window.performance.now();
 
-            if (window.mochaPhantomJS) {
-                window.mochaPhantomJS.run(/*allTestsDone*/);
-            }
-            else {
-                window.mocha.run(allTestsDone);
-            }
-        });
+        if (window.mochaPhantomJS) {
+            window.mochaPhantomJS.run(/*allTestsDone*/);
+        }
+        else {
+            window.mocha.run(allTestsDone);
+        }
     });
 });
 

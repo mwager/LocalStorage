@@ -44,13 +44,12 @@
     <script src="../bower_components/chai/chai.js"></script>
     <script src="./lib/sinon.js"></script>
 
-    <!-- jquery too.. -->
-    <script  src="../bower_components/jquery/jquery.js"></script>
-
     <!-- include the fixture data to work with -->
     <script>
     window.onerror = function(msg, file, line) {
-        window.alert('INDEX.HTML uncaught: ' + msg + ' ' + file + ' ' + line);
+        var m = 'INDEX.HTML uncaught: ' + msg + ' ' + file + ' ' + line;
+        console.log(m)
+        window.alert(m);
     };
     </script>
 
